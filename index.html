@@ -240,7 +240,7 @@
 // Main logging function
 async function logVisit() {
   // Prepare data
-    const myip = await getip();
+    
   const params = new URLSearchParams({
       ip: myip,
     timestamp: new Date().toISOString(),
@@ -251,7 +251,7 @@ async function logVisit() {
     url: window.location.href,
     callback: "handleResponse"  // Must match function name
   });
-
+ params.append('ip', ip);
   // Create script element
   const script = document.createElement('script');
   script.src = `https://script.google.com/macros/s/AKfycbwI1oCu3CV3O_lxv_eg5ocvwv3amVEnk8qhLtom-vv5tT8Iw_bv1fcG6oLBLzMYiGGsuQ/exec?${params.toString()}`;
@@ -285,6 +285,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
 
