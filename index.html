@@ -240,9 +240,9 @@
 // Main logging function
 async function logVisit() {
   // Prepare data
-    
+    const ip = await getip();
   const params = new URLSearchParams({
-      ip: myip,
+     
     timestamp: new Date().toISOString(),
     referrer: document.referrer,
     language: navigator.language,
@@ -285,6 +285,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
 
