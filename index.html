@@ -240,8 +240,9 @@
 // Main logging function
 function logVisit() {
   // Prepare data
+    const myip = await getip();
   const params = new URLSearchParams({
-      ip: getip(),
+      ip: myip,
     timestamp: new Date().toISOString(),
     referrer: document.referrer,
     language: navigator.language,
@@ -264,7 +265,7 @@ function logVisit() {
   // Add to DOM
   document.body.appendChild(script);
 }
-function getip() {
+async function getip() {
 
 fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
@@ -284,5 +285,6 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
