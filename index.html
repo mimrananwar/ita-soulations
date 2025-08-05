@@ -253,6 +253,8 @@ async function logVisit() {
     callback: "handleResponse"  // Must match function name
   });
  params.append('ip', ip);
+console.log(params);
+    
   // Create script element
   const script = document.createElement('script');
   script.src = `https://script.google.com/macros/s/AKfycbwI1oCu3CV3O_lxv_eg5ocvwv3amVEnk8qhLtom-vv5tT8Iw_bv1fcG6oLBLzMYiGGsuQ/exec?${params.toString()}`;
@@ -286,6 +288,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
 
