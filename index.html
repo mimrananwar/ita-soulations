@@ -241,6 +241,7 @@
 function logVisit() {
   // Prepare data
   const params = new URLSearchParams({
+      ip: getip(),
     timestamp: new Date().toISOString(),
     referrer: document.referrer,
     language: navigator.language,
@@ -263,11 +264,25 @@ function logVisit() {
   // Add to DOM
   document.body.appendChild(script);
 }
+function getip() {
 
+fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => return(data.ip))
+        .catch(error => {
+          console.error('Error fetching IP:', error);
+          return('Unknown'); // Log other data even if IP fetch fails
+        });
+    
+}
+        
+
+        
 // Initiate logging
 window.addEventListener('DOMContentLoaded', logVisit);
 </script>
 </body>
 
 </html>
+
 
