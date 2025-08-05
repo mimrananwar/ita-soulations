@@ -253,7 +253,7 @@ async function logVisit() {
     callback: "handleResponse"  // Must match function name
   });
  params.append('ip', ip);
-console.log(params);
+console.log(params.toString());
     
   // Create script element
   const script = document.createElement('script');
@@ -288,6 +288,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
 
