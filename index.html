@@ -238,7 +238,7 @@
 }
 
 // Main logging function
-function logVisit() {
+async function logVisit() {
   // Prepare data
     const myip = await getip();
   const params = new URLSearchParams({
@@ -285,6 +285,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
 
