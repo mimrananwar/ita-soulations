@@ -285,9 +285,87 @@ function getip() {
 // Initiate logging
 window.addEventListener('DOMContentLoaded', logVisit);
 </script>
+
+    <script>
+  // Track internal link clicks
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.href && link.href.includes(window.location.hostname)) {
+        trackClick({
+          element: link.innerText.trim() || link.getAttribute('aria-label') || link.href,
+          url: link.href,
+          x: e.clientX,
+          y: e.clientY
+        });
+      }
+    });
+  });
+
+  async function trackClick(data) {
+    try {
+      const myip = await getip();
+      const params = new URLSearchParams({
+        action: 'click',
+        ip: myip,
+        timestamp: new Date().toISOString(),
+        url: window.location.href,
+        callback: "handleResponse",
+        ...data
+      });
+
+      sendToGoogleScript(params);
+    } catch (error) {
+      console.error('Click tracking failed:', error);
+    }
+  }
+
+  // Modify your contact form submission
+  document.querySelector('.contact-form')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const myip = await getip();
+    
+    const params = new URLSearchParams({
+      action: 'contact',
+      ip: myip,
+      callback: "handleResponse"
+    });
+    
+    formData.forEach((value, key) => {
+      params.append(key, value);
+    });
+
+    try {
+      const response = await sendToGoogleScript(params, true);
+      if (response.status === "success") {
+        alert('Thank you for your message!');
+        this.reset();
+      }
+    } catch (error) {
+      alert('There was an error sending your message. Please try again.');
+    }
+  });
+
+  // Shared function for sending data
+  function sendToGoogleScript(params, useFetch = false) {
+    const url = `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?${params.toString()}`;
+    
+    if (useFetch) {
+      return fetch(url, { mode: 'no-cors' })
+        .then(() => ({ status: "success" }))
+        .catch(() => ({ status: "error" }));
+    } else {
+      const script = document.createElement('script');
+      script.src = url;
+      document.body.appendChild(script);
+    }
+  }
+</script>
 </body>
 
 </html>
+
 
 
 
