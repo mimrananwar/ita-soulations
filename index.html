@@ -349,7 +349,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 
   // Shared function for sending data
   function sendToGoogleScript(params, useFetch = false) {
-    const url = `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?${params.toString()}`;
+    const url = `https://script.google.com/macros/s/AKfycbwI1oCu3CV3O_lxv_eg5ocvwv3amVEnk8qhLtom-vv5tT8Iw_bv1fcG6oLBLzMYiGGsuQ/exec?${params.toString()}`;
     
     if (useFetch) {
       return fetch(url, { mode: 'no-cors' })
@@ -365,6 +365,7 @@ window.addEventListener('DOMContentLoaded', logVisit);
 </body>
 
 </html>
+
 
 
 
