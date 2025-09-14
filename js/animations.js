@@ -13,7 +13,10 @@ document.addEventListener('componentsLoaded', function() {
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.reveal').forEach(el => {
-        revealObserver.observe(el);
-    });
+    // Use a slight delay to ensure all components are loaded
+    setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+    }, 100);
 });
