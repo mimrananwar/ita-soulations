@@ -55,9 +55,8 @@ document.addEventListener('componentsLoaded', function() {
     // Initiate logging
     window.addEventListener('DOMContentLoaded', logVisit);
 
-    // Track internal link clicks
-    document.addEventListener('DOMContentLoaded', function() {
-      document.body.addEventListener('click', function(e) {
+    // Track internal link clicks with delegation for dynamically loaded elements
+    document.addEventListener('click', function(e) {
         const link = e.target.closest('a');
         if (link && link.href && link.href.includes(window.location.hostname)) {
           trackClick({
@@ -67,7 +66,41 @@ document.addEventListener('componentsLoaded', function() {
             y: e.clientY
           });
         }
-      });
+    });
+
+    // Track chatbot interactions
+    document.addEventListener('click', function(e) {
+        // Chatbot toggle button
+        if (e.target.closest('#chatbot-toggle')) {
+            trackClick({
+                element: 'Chatbot Toggle',
+                url: window.location.href,
+                x: e.clientX,
+                y: e.clientY
+            });
+        }
+        
+        // Chatbot close button
+        if (e.target.closest('#chatbot-close')) {
+            trackClick({
+                element: 'Chatbot Close',
+                url: window.location.href,
+                x: e.clientX,
+                y: e.clientY
+            });
+        }
+        
+        // Chatbot send button
+        if (e.target.closest('#chatbot-send')) {
+            const input = document.getElementById('chatbot-input');
+            trackClick({
+                element: 'Chatbot Send Message',
+                url: window.location.href,
+                x: e.clientX,
+                y: e.clientY,
+                message: input ? input.value.trim() : ''
+            });
+        }
     });
 
     async function trackClick(data) {
@@ -89,31 +122,37 @@ document.addEventListener('componentsLoaded', function() {
     }
 
     // Modify your contact form submission
-    document.querySelector('.contact-form')?.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const myip = await getip();
-      
-      const params = new URLSearchParams({
-        action: 'contact',
-        ip: myip,
-        callback: "handleResponse"
-      });
-      
-      formData.forEach((value, key) => {
-        params.append(key, value);
-      });
-
-      try {
-        const response = await sendToGoogleScript(params, true);
-        if (response.status === "success") {
-          alert('Thank you for your message!');
-          this.reset();
+    document.addEventListener('submit', function(e) {
+        if (e.target.classList.contains('contact-form')) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            trackContactForm(formData);
         }
-      } catch (error) {
-        alert('There was an error sending your message. Please try again.');
-      }
     });
+
+    async function trackContactForm(formData) {
+        const myip = await getip();
+        
+        const params = new URLSearchParams({
+            action: 'contact',
+            ip: myip,
+            callback: "handleResponse"
+        });
+        
+        formData.forEach((value, key) => {
+            params.append(key, value);
+        });
+
+        try {
+            const response = await sendToGoogleScript(params, true);
+            if (response.status === "success") {
+                alert('Thank you for your message!');
+                document.querySelector('.contact-form')?.reset();
+            }
+        } catch (error) {
+            alert('There was an error sending your message. Please try again.');
+        }
+    }
 
     // Shared function for sending data
     function sendToGoogleScript(params, useFetch = false) {

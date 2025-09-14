@@ -64,7 +64,9 @@ document.addEventListener('componentsLoaded', function() {
 
     // Send message on button click
     if (chatbotSend) {
-        chatbotSend.addEventListener('click', sendMessage);
+        chatbotSend.addEventListener('click', function(e) {
+            sendMessage();
+        });
     }
 
     // Send message on Enter key
