@@ -10,7 +10,9 @@ document.addEventListener('componentsLoaded', function() {
     
     // n8n webhook URL - REPLACE WITH YOUR ACTUAL n8n WEBHOOK URL
     // You can find this in your n8n instance under the webhook node settings
-    const N8N_WEBHOOK_URL = 'http://129.80.27.150:5678/webhook/90f0993e-31ff-4523-8dbc-613465d12b64/chat';
+    // IMPORTANT: For GitHub Pages deployment, this MUST be an HTTPS URL
+    // If your n8n instance doesn't support HTTPS, consider using a proxy service like ngrok or a reverse proxy
+    const N8N_WEBHOOK_URL = 'https://129.80.27.150:5678/webhook/90f0993e-31ff-4523-8dbc-613465d12b64/chat';
     
 
     
@@ -142,7 +144,17 @@ document.addEventListener('componentsLoaded', function() {
             if (typingIndicator && typingIndicator.parentNode) {
                 typingIndicator.parentNode.removeChild(typingIndicator);
             }
-            addMessage("Sorry, I'm having trouble connecting. Please try again later. Error: " + error.message, 'bot');
+            
+            // Provide more specific error messages
+            let errorMessage = "Sorry, I'm having trouble connecting. Please try again later.";
+            
+            if (error.message.includes('Failed to fetch')) {
+                errorMessage += " This might be due to a mixed content issue (HTTP/HTTPS). Ensure your n8n webhook URL uses HTTPS when deploying to GitHub Pages.";
+            } else {
+                errorMessage += " Error: " + error.message;
+            }
+            
+            addMessage(errorMessage, 'bot');
         }
     }
 
