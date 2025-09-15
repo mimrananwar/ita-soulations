@@ -12,7 +12,7 @@ document.addEventListener('componentsLoaded', function() {
     // You can find this in your n8n instance under the webhook node settings
     // IMPORTANT: For GitHub Pages deployment, this MUST be an HTTPS URL
     // If your n8n instance doesn't support HTTPS, consider using a proxy service like ngrok or a reverse proxy
-    const N8N_WEBHOOK_URL = 'https://68d3006f7bcd.ngrok-free.app/webhook/90f0993e-31ff-4523-8dbc-613465d12b64/chat';
+    const N8N_WEBHOOK_URL = 'https://metencephalic-emmett-unabusable.ngrok-free.app/webhook/90f0993e-31ff-4523-8dbc-613465d12b64/chat';
     
 
     
