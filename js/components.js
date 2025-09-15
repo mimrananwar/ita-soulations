@@ -28,8 +28,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         await loadComponent('hero', 'hero-container');
         await loadComponent('services', 'services-container');
         await loadComponent('why-us', 'why-us-container');
-        await loadComponent('process', 'process-container');
+        
         await loadComponent('team', 'team-container');
+        await loadComponent('client-logos', 'client-logos-container');
+        await loadComponent('testimonials-only', 'testimonials-container');
+        await loadComponent('process', 'process-container');
         await loadComponent('contact', 'contact-container');
         
         // Load footer
