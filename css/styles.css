@@ -39,7 +39,7 @@ p { margin: 0 0 1rem 0; }
 a { color: var(--accent-teal); text-decoration: none; }
 
 .section-container {
-    padding: 4rem 2rem;
+    padding: 4rem 0;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -242,7 +242,7 @@ a { color: var(--accent-teal); text-decoration: none; }
 .process-timeline::after {
     content: '';
     position: absolute;
-    width: 3px;
+    width: 0px;
     background-color: #e0e0e0;
     top: 25px;
     bottom: 25px;
@@ -741,8 +741,9 @@ a { color: var(--accent-teal); text-decoration: none; }
 }
 
 #testimonials .section-container {
-    max-width: 100%;
-    padding: 2rem 0;
+    padding: 0rem 0rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .client-logos-container {
